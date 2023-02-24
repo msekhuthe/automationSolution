@@ -1,6 +1,6 @@
 node {
 	stage ('SCM checkout'){
-		git "https://github.com/msekhuthe/automationSolution"
+		git 'https://github.com/msekhuthe/automationSolution.git', branch: 'main'
 		}
 	stage ('Build'){
     	dir("comtest") {
