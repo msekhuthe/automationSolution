@@ -1,13 +1,16 @@
 pipeline {
-	stage ('SCM checkout'){
-		git 'https://github.com/msekhuthe/automationSolution.git', branch: 'main'
-		}
-	stage ('Build'){
-    	dir("comtest") {
-	   sh "mvn clean install"
-       }
-       	dir("comtest/target") {
-	   sh "java -jar com.automationSolution-1.0-SNAPSHOT.jar"
-       }
-		}
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+              checkout([$class: 'GitSCM',
+                branches: [[name: '*/main']],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [[$class: 'CleanCheckout']],
+                submoduleCfg: [],
+                userRemoteConfigs: [[url: 'https://github.com/msekhuthe/automationSolution.git']]])
+              sh "ls -ltr"
+          }
+        }
+    }
 }
