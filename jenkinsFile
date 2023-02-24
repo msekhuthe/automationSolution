@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: "${main}", url: "${https://github.com/msekhuthe/automationSolution.git}"
+                git branch: "main", url: "https://github.com/msekhuthe/automationSolution.git"
             }
         }
         stage('Build') {
