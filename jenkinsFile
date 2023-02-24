@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: "${env.BRANCH_NAME}", url: "${env.REPO_URL}"
+                git branch: "${env.main}", url: "${env.https://github.com/msekhuthe/automationSolution.git}"
             }
         }
         stage('Build') {
