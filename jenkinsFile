@@ -1,37 +1,17 @@
 pipeline {
     agent any
-    options {
-        skipDefaultCheckout true
-    }
     stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: "main", url: "https://github.com/msekhuthe/automationSolution.git"
-            }
-        }
         stage('Build') {
             steps {
-                sh './gradlew build'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './gradlew test'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh './deploy.sh'
-            }
-        }
-    }
-    post {
-        always {
-            githubStatus context: 'continuous-integration/jenkins', state: 'success'
-            if (env.CHANGE_ID) {
-                githubComment message: "The pipeline completed successfully!"
-                githubLabel labels: ['approved']
-            }
+              checkout([$class: 'GitSCM',
+                branches: [[name: '*/main']],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [[$class: 'CleanCheckout']],
+                submoduleCfg: [],
+                userRemoteConfigs: [[url: 'https://github.com/msekhuthe/automationSolution.git']]])
+              sh "ls -ltr"
+          }
         }
     }
 }
+
